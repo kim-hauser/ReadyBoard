@@ -4,3 +4,31 @@ body {
   background-color: #0f172a; /* nice dark slate */
   color: white;
 }
+
+.page {
+  padding: 2rem;
+  color: #e6edf3;
+}
+
+.subtitle {
+  color: #9da7b1;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #161b22;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #30363d;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #238636;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
