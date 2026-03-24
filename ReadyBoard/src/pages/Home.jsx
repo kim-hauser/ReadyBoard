@@ -5,7 +5,7 @@ function Home() {
     <div className="page">
       <h1>ReadyBoard</h1>
       <p className="subtitle">
-        A streamlined dashboard for tracking and managing change requests.
+        A streamlined tool for tracking and managing change requests.
       </p>
 
       <section className="card">
