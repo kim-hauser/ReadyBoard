@@ -489,3 +489,40 @@ button:disabled,
     font-size: 0.95rem;
   }
 }
+
+.page {
+  padding: 2rem 1.5rem;
+}
+
+/* Columns */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 2.5rem;
+}
+
+.status-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.status-column h2 {
+  margin: 0 0 0.75rem 0;
+  padding-left: 0.25rem;
+}
+
+.change-id {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold-soft);
+}
+
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}

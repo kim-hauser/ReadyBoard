@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
-import ChangeList from './pages/ChangeList'
+import Dashboard from './pages/Dashboard'
 import ChangeDetail from './pages/ChangeDetail'
 
 
@@ -16,7 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/changes" element={<ChangeList />} />
+        <Route path="/changes" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} /> {/* Works as a redirect. */}
         <Route path="/change/:id" element={<ChangeDetail />} />
       </Routes>
       <Footer />

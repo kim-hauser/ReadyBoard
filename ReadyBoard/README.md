@@ -1,6 +1,6 @@
 # ReadyBoard
 
-Frontend dashboard for change management visualization.
+Frontend tool for change management visualization.
 
 ## Setup
 
