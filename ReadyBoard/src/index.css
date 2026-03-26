@@ -225,6 +225,32 @@ main {
   transform: translateY(-1px);
 }
 
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
+
 /* Typography */
 h1,
 h2,
@@ -533,7 +559,7 @@ button:disabled,
     padding: 0.55rem 0.85rem;
     font-size: 0.95rem;
   }
-}
+}  
 
 .page {
   padding: 2rem 1.5rem;

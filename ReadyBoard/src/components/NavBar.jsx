@@ -1,12 +1,37 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 function NavBar() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  function toggleMenu() {
+    setIsOpen(!isOpen)
+  }
+
+  function closeMenu() {
+    setIsOpen(false)
+  }
+
   return (
     <nav className="navbar">
-      <div className="links">
-        <Link to="/">Home</Link>
-        <Link to="/changes">Changes</Link>
-        <Link to="/about">About</Link>
+      <div className="nav-header">
+        <h2 className="nav-logo">ReadyBoard</h2>
+
+        <button
+          className="menu-toggle"
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
+        >
+          {isOpen ? '✕' : '☰'}
+        </button>
+      </div>
+
+{/* Conditional statement for mobile hamburger menu CSS. If true mobile CSS class shows. */}
+      <div className={`nav-links ${isOpen ? '✕' : '☰'}}`}> 
+        <Link to="/" onClick={closeMenu}>Home</Link>
+        <Link to="/changes" onClick={closeMenu}>Changes</Link>
+        <Link to="/about" onClick={closeMenu}>About</Link>
       </div>
     </nav>
   )
