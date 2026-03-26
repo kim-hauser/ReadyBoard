@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import mockChanges from '../data/MockChanges'
+import mockChanges from '../data/mockChanges'
 import ButtonLink from '../components/ButtonLink'
 
 function ChangeDetail() {

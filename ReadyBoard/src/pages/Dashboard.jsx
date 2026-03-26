@@ -1,4 +1,4 @@
-import mockChanges from '../data/MockChanges'
+import mockChanges from '../data/mockChanges'
 import { Link } from 'react-router-dom'
 import ButtonLink from '../components/ButtonLink'
 
