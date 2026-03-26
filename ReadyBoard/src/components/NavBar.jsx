@@ -5,7 +5,7 @@ function NavBar() {
   const [isOpen, setIsOpen] = useState(false)
 
   function toggleMenu() {
-    setIsOpen(!isOpen)
+    setIsOpen(prev => !prev)
   }
 
   function closeMenu() {
@@ -28,7 +28,7 @@ function NavBar() {
       </div>
 
 {/* Conditional statement for mobile hamburger menu CSS. If true mobile CSS class shows. */}
-      <div className={`nav-links ${isOpen ? '✕' : '☰'}}`}> 
+      <div className={`nav-links ${isOpen ? 'open' : ''}`}>
         <Link to="/" onClick={closeMenu}>Home</Link>
         <Link to="/changes" onClick={closeMenu}>Changes</Link>
         <Link to="/about" onClick={closeMenu}>About</Link>
