@@ -1,5 +1,6 @@
 import mockChanges from '../data/mockChanges'
 import { Link } from 'react-router-dom'
+import ChangeCard from '../components/ChangeCard'
 import ButtonLink from '../components/ButtonLink'
 
 const columns = [
@@ -8,9 +9,10 @@ const columns = [
   { key: 'open', title: 'Open' },
 ]
 
-/* 1. Sort changes into (open, pending, ready) groups. 
+ /* 1. Sort changes into (open, pending, ready) groups. 
     2. Render the columns to place changes.
-    3. Place sorted changes into columns. */
+    3. Place sorted changes (now using a ChangeCard component!)
+       into columns. */
 
 function Dashboard() {
   const groupedChanges = mockChanges.reduce((acc, change) => {
@@ -28,14 +30,7 @@ function Dashboard() {
             <h2>{col.title}</h2>
 
             {groupedChanges[col.key]?.map((change) => (
-              <div key={change.id} className="card">
-                <h3>
-                <Link to={`/change/${change.id}`}>
-                    {change.title}
-                </Link>
-                </h3>
-                <p>{change.owner}</p>
-            </div>
+              <ChangeCard key={change.id} change={change} />
             ))}
           </div>
           ))}
