@@ -34,6 +34,7 @@ function ChangeDetail() {
         <h1>{change.title}</h1>
         <p><strong>ID:</strong> {change.id}</p>
         <p><strong>Owner:</strong> {change.owner}</p>
+        <p><strong>Assignment Group:</strong> {change.assignmentGroup}</p>
         <p><strong>Status:</strong> {change.status}</p>
         <p><strong>Description:</strong> {change.description}</p>
         <ButtonLink to="/dashboard" variant = "secondary">

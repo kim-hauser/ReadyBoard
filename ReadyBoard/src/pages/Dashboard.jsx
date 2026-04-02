@@ -1,7 +1,6 @@
+import { useState } from 'react'
 import mockChanges from '../data/mockChanges'
-import { Link } from 'react-router-dom'
 import ChangeCard from '../components/ChangeCard'
-import ButtonLink from '../components/ButtonLink'
 
 const columns = [
   { key: 'ready', title: 'Ready' },
@@ -15,6 +14,7 @@ const columns = [
        into columns. */
 
 function Dashboard() {
+  const [viewMode, setViewMode] = useState('status')
   const groupedChanges = mockChanges.reduce((acc, change) => {
     const key = change.status.toLowerCase()
     acc[key] = acc[key] || []
@@ -22,9 +22,43 @@ function Dashboard() {
     return acc
   }, {})
 
+  /* Grouped by assignment group toggle */
+
+  const groupedByAssignment = mockChanges.reduce((acc, change) => {
+  const key = change.assignmentGroup || 'Unassigned'
+    acc[key] = acc[key] || []
+    acc[key].push(change)
+    return acc
+  }, {})
+  
+  /* Sorts assignment groups */
+
+  const sortedAssignmentGroups = Object.entries(groupedByAssignment).sort(
+    ([a], [b]) => a.localeCompare(b)
+  )
+
   return (
     <div className="page">
-      <div className="columns">
+    <div className="view-toggle">
+      <button
+          type="button"
+          onClick={() => setViewMode('status')}
+          className={viewMode === 'status' ? 'active-toggle' : ''}
+        >
+          Status View
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setViewMode('assignment')}
+          className={viewMode === 'assignment' ? 'active-toggle' : ''}
+        >
+          Assignment Group View
+      </button>
+    </div>
+
+    {viewMode === 'status' ? (
+    <div className="columns">
         {columns.map((col) => (
           <div key={col.key} className="status-column">
             <h2>{col.title}</h2>
@@ -35,7 +69,22 @@ function Dashboard() {
           </div>
           ))}
       </div>
-    </div>
+      ) : (
+      <div className="assignment-group-view">
+          {sortedAssignmentGroups.map(([groupName, changes]) => (
+            <div key={groupName} className="assignment-group-section">
+              <h2>{groupName}</h2>
+
+              <div className="grouped-cards">
+                {changes.map((change) => (
+                  <ChangeCard key={change.id} change={change} />
+                ))}
+            </div>
+          </div>
+          ))}
+        </div>
+      )}
+   </div>
   )
 }
 
