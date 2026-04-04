@@ -22,12 +22,17 @@ function Dashboard() {
 
   const [selectedOwner, setSelectedOwner] = useState('All Owners')
 
-  /* Creates new owner set from mockChanges.js + sorts alphabetically */
+  /* Creates new owner set from mockChanges.js. Also gets last name to sort.*/
+  
+  const getLastName = (fullName) => {
+  const nameParts = fullName.trim().split(' ')
+  return nameParts[nameParts.length - 1]
+  }
 
   const owners = [
     'All Owners',
     ...[...new Set(mockChanges.map(change => change.owner))].sort((a, b) =>
-      a.localeCompare(b, undefined, { sensitivity: 'base' }) // Case-insensitive
+      getLastName(a).localeCompare(getLastName(b), undefined, { sensitivity: 'base' }) // Case-insensitive
     ),
   ]
 
