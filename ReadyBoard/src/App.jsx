@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import Header from './components/Header'
+import BackToTop from './components/BackToTop'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -20,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} /> {/* Works as a redirect. */}
         <Route path="/change/:id" element={<ChangeDetail />} />
       </Routes>
+      <BackToTop />
       <Footer />
     </div>
   )

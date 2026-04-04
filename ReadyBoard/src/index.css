@@ -160,9 +160,6 @@ main {
 
 /* Header */
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
   backdrop-filter: blur(18px);
   background: rgba(16, 11, 24, 0.78);
   border-bottom: 1px solid rgba(202, 125, 220, 0.14);
@@ -706,4 +703,162 @@ button:disabled,
 .change-grid {
   display: grid;
   gap: 1rem;
+}
+
+/* "Assignment Buckets" - Queue-style assignment group styling */
+
+.assignment-buckets {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.queue-bucket {
+  background: linear-gradient(
+    135deg,
+    rgba(120, 81, 169, 0.18),
+    rgba(30, 16, 56, 0.88)
+  );
+  border: 1px solid rgba(184, 146, 66, 0.22);
+  border-radius: 1.1rem;
+  padding: 1.1rem 1.1rem 1rem;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    0 0 18px rgba(120, 81, 169, 0.08);
+}
+
+.queue-bucket-header {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.queue-bucket-header h2 {
+  margin: 0 0 0.35rem;
+}
+
+.queue-bucket-meta {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(244, 241, 255, 0.78);
+}
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.queue-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.queue-row:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(184, 146, 66, 0.32);
+}
+
+.queue-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.queue-change-id {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+
+  color: #f2c94c
+}
+
+.queue-change-title {
+  color: #f7f4ff;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.queue-row-side {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.queue-change-owner {
+  color: rgba(244, 241, 255, 0.78);
+  font-size: 0.92rem;
+}
+
+.queue-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.queue-status-pill.ready {
+  background: rgba(92, 184, 92, 0.16);
+  color: #d8ffd8;
+  border: 1px solid rgba(92, 184, 92, 0.32);
+}
+
+.queue-status-pill.pending {
+  background: rgba(230, 180, 60, 0.14);
+  color: #fff1c7;
+  border: 1px solid rgba(230, 180, 60, 0.28);
+}
+
+.queue-status-pill.open {
+  background: rgba(90, 140, 255, 0.14);
+  color: #dce7ff;
+  border: 1px solid rgba(90, 140, 255, 0.26);
+}
+
+@media (max-width: 768px) {
+  .queue-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .queue-row-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* additional cleanup of assignment group view for mobile */
+
+@media (max-width: 768px) {
+  .queue-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .queue-row-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* smooths floating footer scroll */
+
+html {
+  scroll-behavior: smooth;
 }
