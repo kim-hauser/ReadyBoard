@@ -862,3 +862,36 @@ button:disabled,
 html {
   scroll-behavior: smooth;
 }
+
+/* For Owner filter dropdown in Status View */
+
+.dashboard-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.status-filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.owner-filter-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e9defa;
+  opacity: 0.85;
+}
+
+.owner-filter {
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(26, 18, 40, 0.96);
+  color: #f8f4ff;
+  font-size: 0.9rem;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// Uses state + scroll listener/helper function to create a "back to top" button near footer that disappears when at top.
+// Uses state + scroll listener/helper function to create a "back to top" button near footer.
 
 function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)

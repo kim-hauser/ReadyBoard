@@ -12,13 +12,31 @@ const columns = [
 /* 1. Sort changes into (open, pending, ready) groups.
    2. Render the columns to place changes.
    3. Place sorted changes (now using a ChangeCard component!)
-      into columns.
+      into columns (Status View only)
 */
 
 function Dashboard() {
   const [viewMode, setViewMode] = useState('status')
 
-  const groupedChanges = mockChanges.reduce((acc, change) => {
+  /* Owner filter bar in Status View */
+
+  const [selectedOwner, setSelectedOwner] = useState('All Owners')
+
+  /* Creates new owner set from mockChanges.js + sorts alphabetically */
+
+  const owners = [
+    'All Owners',
+    ...[...new Set(mockChanges.map(change => change.owner))].sort((a, b) =>
+      a.localeCompare(b, undefined, { sensitivity: 'base' }) // Case-insensitive
+    ),
+  ]
+
+  const filteredStatusChanges =
+    selectedOwner === 'All Owners'
+      ? mockChanges
+      : mockChanges.filter(change => change.owner === selectedOwner)
+
+  const groupedChanges = filteredStatusChanges.reduce((acc, change) => {
     const key = change.status.toLowerCase()
     acc[key] = acc[key] || []
     acc[key].push(change)
@@ -36,9 +54,13 @@ function Dashboard() {
     ([a], [b]) => a.localeCompare(b)
   )
 
-  return (
-    <div className="page">
+return (
+  <div className="page">
+    <div className="dashboard-controls">
       <div className="view-toggle">
+
+        {/* Toggle to switch between Status and Assignment Group Views */}
+
         <button
           type="button"
           onClick={() => setViewMode('status')}
@@ -56,76 +78,99 @@ function Dashboard() {
         </button>
       </div>
 
-      {viewMode === 'status' ? (
-        <div className="columns">
-          {columns.map((col) => (
-            <div key={col.key} className="status-column">
-              <h2>{col.title}</h2>
-
-              {groupedChanges[col.key]?.map((change) => (
-                <ChangeCard key={change.id} change={change} />
-              ))}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="assignment-buckets">
-          {sortedAssignmentGroups.map(([groupName, changes]) => {
-            const readyCount = changes.filter(
-              (change) => change.status === 'Ready'
-            ).length
-
-            const pendingCount = changes.filter(
-              (change) => change.status === 'Pending'
-            ).length
-
-            const openCount = changes.filter(
-              (change) => change.status === 'Open'
-            ).length
-
-    /* queue-style Assignment Group View */
-
-            return (
-              <section key={groupName} className="queue-bucket">
-                <div className="queue-bucket-header">
-                  <div>
-                    <h2>{groupName}</h2>
-                    <p className="queue-bucket-meta">
-                      {changes.length} total · Ready: {readyCount} · Pending: {pendingCount} · Open: {openCount}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="queue-list">
-                  {changes.map((change) => (
-                    <Link
-                      key={change.id}
-                      to={`/change/${change.id}`}
-                      className="queue-row"
-                    >
-                      <div className="queue-row-main">
-                        <span className="queue-change-id">{change.id}</span>
-                        <span className="queue-change-title">{change.title}</span>
-                      </div>
-
-                      <div className="queue-row-side">
-                        <span className="queue-change-owner">{change.owner}</span>
-                        <span
-                          className={`queue-status-pill ${change.status.toLowerCase()}`}
-                        >
-                          {change.status}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )
-          })}
+      {viewMode === 'status' && (
+        <div className="status-filter-wrap">
+          <label htmlFor="ownerFilter" className="owner-filter-label">
+            Owner
+          </label>
+          <select
+            id="ownerFilter"
+            value={selectedOwner}
+            onChange={(e) => setSelectedOwner(e.target.value)}
+            className="owner-filter"
+          >
+            {owners.map((owner) => (
+              <option key={owner} value={owner}>
+                {owner}
+              </option>
+            ))}
+          </select>
         </div>
       )}
     </div>
+    
+    {/* Mapped columns in status view */}
+
+    {viewMode === 'status' ? (
+      <div className="columns">
+        {columns.map((col) => (
+          <div key={col.key} className="status-column">
+            <h2>{col.title}</h2>
+
+            {groupedChanges[col.key]?.map((change) => (
+              <ChangeCard key={change.id} change={change} />
+            ))}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="assignment-buckets"> {/* Assignment Group buckets */}
+        {sortedAssignmentGroups.map(([groupName, changes]) => {
+          const readyCount = changes.filter(
+            (change) => change.status === 'Ready'
+          ).length
+
+          const pendingCount = changes.filter(
+            (change) => change.status === 'Pending'
+          ).length
+
+          const openCount = changes.filter(
+            (change) => change.status === 'Open'
+          ).length
+
+          return (
+            <section key={groupName} className="queue-bucket">
+              <div className="queue-bucket-header">
+                <div>
+                  <h2>{groupName}</h2>
+                  <p className="queue-bucket-meta">
+                    {changes.length} total · Ready: {readyCount} · Pending: {pendingCount} · Open: {openCount}
+                  </p>
+                </div>
+              </div>
+
+              {/* "Queue-list" = The item view for Assignment Group View to differentiate it 
+              from the Change Cards used in Status View */ }
+
+              <div className="queue-list">
+                {changes.map((change) => (
+                  <Link
+                    key={change.id}
+                    to={`/change/${change.id}`}
+                    className="queue-row"
+                  >
+                    <div className="queue-row-main">
+                      <span className="queue-change-id">{change.id}</span>
+                      <span className="queue-change-title">{change.title}</span>
+                    </div>
+
+                    <div className="queue-row-side">
+                      <span className="queue-change-owner">{change.owner}</span>
+                      <span
+                        className={`queue-status-pill ${change.status.toLowerCase()}`}
+                      >
+                        {change.status}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )
+        })}
+      </div>
+    )}
+  </div>
   )
 }
-
 export default Dashboard
