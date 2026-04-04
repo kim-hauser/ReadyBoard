@@ -18,7 +18,7 @@ const columns = [
 function Dashboard() {
   const location = useLocation()
   const [viewMode, setViewMode] = useState(
-    location.state?.restore.View || 'status'
+    location.state?.restoreView || 'status'
   )
 
   /* Owner filter bar in Status View */
