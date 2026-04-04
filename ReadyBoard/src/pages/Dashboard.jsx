@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import mockChanges from '../data/mockChanges'
 import ChangeCard from '../components/ChangeCard'
 
@@ -16,11 +16,22 @@ const columns = [
 */
 
 function Dashboard() {
-  const [viewMode, setViewMode] = useState('status')
+  const location = useLocation()
+  const [viewMode, setViewMode] = useState(
+    location.state?.restore.View || 'status'
+  )
 
   /* Owner filter bar in Status View */
 
   const [selectedOwner, setSelectedOwner] = useState('All Owners')
+
+  /* Setup for Assignment Group filtering */
+
+  const [selectedGroup, setSelectedGroup] = useState('All Groups')
+  const assignmentGroups = [
+    'All Groups',
+    ...[...new Set(mockChanges.map(change => change.assignmentGroup || 'Unassigned'))].sort()
+  ]
 
   /* Creates new owner set from mockChanges.js. Also gets last name to sort.*/
   
@@ -48,7 +59,14 @@ function Dashboard() {
     return acc
   }, {})
 
-  const groupedByAssignment = mockChanges.reduce((acc, change) => {
+ const filteredAssignmentChanges =
+    selectedGroup === 'All Groups'
+      ? mockChanges
+      : mockChanges.filter(
+        change => (change.assignmentGroup || 'Unassigned') === selectedGroup
+      )
+    
+  const groupedByAssignment = filteredAssignmentChanges.reduce((acc, change) => {
     const key = change.assignmentGroup || 'Unassigned'
     acc[key] = acc[key] || []
     acc[key].push(change)
@@ -61,48 +79,70 @@ function Dashboard() {
 
 return (
   <div className="page">
-    <div className="dashboard-controls">
-      <div className="view-toggle">
+  <div className="dashboard-controls">
+  <div className="view-toggle">
 
-        {/* Toggle to switch between Status and Assignment Group Views */}
+    {/* Toggle to switch between Status and Assignment Group Views */}
 
-        <button
-          type="button"
-          onClick={() => setViewMode('status')}
-          className={viewMode === 'status' ? 'active-toggle' : ''}
+    <button
+      type="button"
+      onClick={() => setViewMode('status')}
+      className={viewMode === 'status' ? 'active-toggle' : ''}
+    >
+      Status View
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setViewMode('assignment')}
+      className={viewMode === 'assignment' ? 'active-toggle' : ''}
+    >
+      Assignment Group View
+    </button>
+  </div>
+
+  <div className="filter-bar">
+    {viewMode === 'assignment' && (
+      <div className="filter-group">
+        <label htmlFor="groupFilter" className="filter-label">
+          Assignment Group
+        </label>
+        <select
+          id="groupFilter"
+          value={selectedGroup}
+          onChange={(e) => setSelectedGroup(e.target.value)}
+          className="filter-dropdown"
         >
-          Status View
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setViewMode('assignment')}
-          className={viewMode === 'assignment' ? 'active-toggle' : ''}
-        >
-          Assignment Group View
-        </button>
+          {assignmentGroups.map((group) => (
+            <option key={group} value={group}>
+              {group}
+            </option>
+          ))}
+        </select>
       </div>
+    )}
 
-      {viewMode === 'status' && (
-        <div className="status-filter-wrap">
-          <label htmlFor="ownerFilter" className="owner-filter-label">
-            Owner
-          </label>
-          <select
-            id="ownerFilter"
-            value={selectedOwner}
-            onChange={(e) => setSelectedOwner(e.target.value)}
-            className="owner-filter"
-          >
-            {owners.map((owner) => (
-              <option key={owner} value={owner}>
-                {owner}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-    </div>
+    {viewMode === 'status' && (
+      <div className="filter-group">
+        <label htmlFor="ownerFilter" className="filter-label">
+          Owner
+        </label>
+        <select
+          id="ownerFilter"
+          value={selectedOwner}
+          onChange={(e) => setSelectedOwner(e.target.value)}
+          className="filter-dropdown"
+        >
+          {owners.map((owner) => (
+            <option key={owner} value={owner}>
+              {owner}
+            </option>
+          ))}
+        </select>
+      </div>
+    )}
+  </div>
+</div>
     
     {/* Mapped columns in status view */}
 
@@ -111,9 +151,9 @@ return (
         {columns.map((col) => (
           <div key={col.key} className="status-column">
             <h2>{col.title}</h2>
-
+            {/* Pass viewMode into ChangeCard so the detail page knows which dashboard view we came from */}
             {groupedChanges[col.key]?.map((change) => (
-              <ChangeCard key={change.id} change={change} />
+              <ChangeCard key={change.id} change={change} viewMode={viewMode} />
             ))}
           </div>
         ))}
@@ -146,12 +186,13 @@ return (
 
               {/* "Queue-list" = The item view for Assignment Group View to differentiate it 
               from the Change Cards used in Status View */ }
-
+              {/* Pass view from Dashboard to ChangeDetail */}
               <div className="queue-list">
                 {changes.map((change) => (
                   <Link
                     key={change.id}
                     to={`/change/${change.id}`}
+                    state={{ fromView: viewMode }}
                     className="queue-row"
                   >
                     <div className="queue-row-main">

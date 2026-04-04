@@ -1,9 +1,12 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useLocation } from 'react-router-dom'
 import mockChanges from '../data/mockChanges'
 import ButtonLink from '../components/ButtonLink'
 
 function ChangeDetail() {
   const { id } = useParams()
+
+  const location = useLocation()
+  const fromView = location.state?.fromView || 'status' 
 
   const change = mockChanges.find(
     (c) => c.id.toString() === id
@@ -20,7 +23,10 @@ function ChangeDetail() {
           <p>
             We couldn’t find a change request with Change Number: <strong>{id}</strong>
           </p>
-          <ButtonLink to="/dashboard" variant = "primary">
+          <ButtonLink 
+            to="/dashboard"
+            state={{ restoreView: fromView }} 
+            variant = "primary">
             ← Back to Dashboard
           </ButtonLink>
         </section>
@@ -37,8 +43,12 @@ function ChangeDetail() {
         <p><strong>Assignment Group:</strong> {change.assignmentGroup}</p>
         <p><strong>Status:</strong> {change.status}</p>
         <p><strong>Description:</strong> {change.description}</p>
-        <ButtonLink to="/dashboard" variant = "secondary">
-          ← Back to Dashboard
+        <ButtonLink 
+          to="/dashboard"
+          state={{ restoreView: fromView }}
+          variant = "secondary"
+          >
+          ← Back to {fromView === 'assignment' ? 'Assignment Group View' : 'Status View'}
         </ButtonLink>
       </section>
     </div>

@@ -863,35 +863,58 @@ html {
   scroll-behavior: smooth;
 }
 
-/* For Owner filter dropdown in Status View */
+/* For Filter Dropdowns (both status and assignment views) */
 
 .dashboard-controls {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.25rem;
+  align-items: center; /* instead of flex-end */
 }
 
-.status-filter-wrap {
+/* Filter bar layout */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Each filter (label + dropdown inline) */
+.filter-group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.owner-filter-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #e9defa;
-  opacity: 0.85;
+/* Label — FIXED contrast + inline feel */
+
+.filter-label {
+  font-size: 0.9rem;              
+  font-weight: 500;              
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.01em;        
+  text-transform: none;           
 }
 
-.owner-filter {
-  padding: 0.55rem 0.85rem;
-  border-radius: 0.7rem;
+/* Dropdown */
+.filter-dropdown {
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.5rem;
   border: 1px solid rgba(212, 175, 55, 0.25);
-  background: rgba(26, 18, 40, 0.96);
-  color: #f8f4ff;
+  background: rgba(16, 11, 24, 0.9);
+  color: #ffffff;
   font-size: 0.9rem;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.filter-dropdown:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+/* Focus */
+.filter-dropdown:focus {
+  outline: none;
+  border-color: rgba(212, 175, 55, 0.75);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
 }
