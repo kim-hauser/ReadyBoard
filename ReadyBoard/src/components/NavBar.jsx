@@ -15,7 +15,6 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="nav-header">
-        <h2 className="nav-logo">ReadyBoard</h2>
 
         <button
           className="menu-toggle"
