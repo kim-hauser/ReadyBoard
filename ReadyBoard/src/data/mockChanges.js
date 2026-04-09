@@ -6,6 +6,8 @@ const mockChanges = [
     title: 'Windows Server Monthly Patching',
     status: 'Ready',
     description: 'Apply the monthly security patch bundle to the production Windows application servers during the approved maintenance window.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000002',
@@ -14,6 +16,8 @@ const mockChanges = [
     title: 'Database Backup Job Update',
     status: 'Pending',
     description: 'Adjust the nightly database backup schedule to move the full backup outside the peak reporting window and confirm retention settings.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000003',
@@ -22,6 +26,8 @@ const mockChanges = [
     title: 'Firewall Rule Cleanup',
     status: 'Open',
     description: 'Remove obsolete inbound rules tied to a retired vendor connection and document the remaining approved access paths.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000004',
@@ -30,6 +36,8 @@ const mockChanges = [
     title: 'SSL Certificate Renewal',
     status: 'Ready',
     description: 'Renew and install the public SSL certificate for the customer portal before the current certificate expires.',
+    risk: 'Very High',
+    riskScore: 5,
   },
   {
     id: 'CHG1000005',
@@ -38,6 +46,8 @@ const mockChanges = [
     title: 'Service Account Password Rotation',
     status: 'Pending',
     description: 'Rotate the password for the middleware service account and update the dependent application configuration entries.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000006',
@@ -46,6 +56,8 @@ const mockChanges = [
     title: 'Internal DNS Record Update',
     status: 'Ready',
     description: 'Update internal DNS A and CNAME records to point traffic to the new application load balancer.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000007',
@@ -54,6 +66,8 @@ const mockChanges = [
     title: 'VMware Host Patch Cycle',
     status: 'Pending',
     description: 'Install the recommended hypervisor patch set on the nonproduction VMware hosts and validate cluster health after reboot.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000008',
@@ -62,6 +76,8 @@ const mockChanges = [
     title: 'VPN Client Version Upgrade',
     status: 'Open',
     description: 'Prepare the deployment package for the new VPN client version and confirm compatibility with managed laptops.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000009',
@@ -70,6 +86,8 @@ const mockChanges = [
     title: 'Printer Driver Rollout',
     status: 'Ready',
     description: 'Deploy the updated universal printer driver to shared workstations to resolve printing failures in the finance area.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000010',
@@ -78,6 +96,8 @@ const mockChanges = [
     title: 'Endpoint Agent Upgrade',
     status: 'Pending',
     description: 'Upgrade the endpoint security agent on pilot devices and verify policy check-in after the software update.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000011',
@@ -86,6 +106,8 @@ const mockChanges = [
     title: 'Restore Test for File Shares',
     status: 'Ready',
     description: 'Run the monthly restore test for the departmental file shares and confirm recovery time meets the team target.',
+    risk: 'Very Low',
+    riskScore: 1,
   },
   {
     id: 'CHG1000012',
@@ -94,6 +116,8 @@ const mockChanges = [
     title: 'Storage Volume Cleanup',
     status: 'Open',
     description: 'Archive aged log files from the shared storage volume to free space and reduce alerting on low disk thresholds.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000013',
@@ -102,6 +126,8 @@ const mockChanges = [
     title: 'User Provisioning Script Update',
     status: 'Pending',
     description: 'Update the onboarding script to apply the current group membership rules for new employee accounts.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000014',
@@ -110,6 +136,8 @@ const mockChanges = [
     title: 'Load Balancer Health Check Tuning',
     status: 'Ready',
     description: 'Adjust the health check path and timeout values on the application load balancer to reduce false failover events.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000015',
@@ -118,6 +146,8 @@ const mockChanges = [
     title: 'API Gateway Timeout Increase',
     status: 'Open',
     description: 'Increase the timeout threshold on the internal API gateway for a batch integration that runs longer after recent data growth.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000016',
@@ -126,6 +156,8 @@ const mockChanges = [
     title: 'CMDB Configuration Item Refresh',
     status: 'Ready',
     description: 'Refresh stale server ownership and support group records in the CMDB to align with the current operations roster.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000017',
@@ -134,6 +166,8 @@ const mockChanges = [
     title: 'Planned Server Reboot',
     status: 'Pending',
     description: 'Perform a controlled reboot of the application server to complete a pending patch install and validate startup services.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000018',
@@ -142,6 +176,8 @@ const mockChanges = [
     title: 'Linux Kernel Patch Deployment',
     status: 'Ready',
     description: 'Deploy the approved Linux kernel patch to the reporting nodes and verify that monitoring agents return to green.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000019',
@@ -150,6 +186,8 @@ const mockChanges = [
     title: 'Database Index Rebuild',
     status: 'Pending',
     description: 'Rebuild fragmented indexes on the customer reporting database to improve query performance during business hours.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000020',
@@ -158,6 +196,8 @@ const mockChanges = [
     title: 'SSO Application Onboarding',
     status: 'Open',
     description: 'Configure single sign-on for the new HR application and complete the test login flow with the identity team.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000021',
@@ -166,6 +206,8 @@ const mockChanges = [
     title: 'Mobile Device Policy Update',
     status: 'Ready',
     description: 'Apply the revised mobile device compliance policy to corporate tablets and confirm that encryption remains enforced.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000022',
@@ -174,6 +216,8 @@ const mockChanges = [
     title: 'Mail Relay Connector Change',
     status: 'Pending',
     description: 'Update the SMTP relay connector settings for a legacy application and test outbound notification delivery.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000023',
@@ -182,6 +226,8 @@ const mockChanges = [
     title: 'SIEM Parser Adjustment',
     status: 'Open',
     description: 'Modify the log parser mapping so the security dashboard correctly categorizes new firewall event fields.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000024',
@@ -190,6 +236,8 @@ const mockChanges = [
     title: 'NTP Synchronization Fix',
     status: 'Ready',
     description: 'Correct the NTP server list on the branch office infrastructure so systems return to the approved time source.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000025',
@@ -198,6 +246,8 @@ const mockChanges = [
     title: 'Log Retention Policy Change',
     status: 'Pending',
     description: 'Extend application log retention from 30 to 60 days on the support cluster and confirm storage impact is acceptable.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000026',
@@ -206,6 +256,8 @@ const mockChanges = [
     title: 'Wireless Controller Firmware Prep',
     status: 'Open',
     description: 'Stage the recommended wireless controller firmware in the lab and validate that existing access point models are supported.',
+    risk: 'Medium',
+    riskScore: 3,
   },
   {
     id: 'CHG1000027',
@@ -214,6 +266,8 @@ const mockChanges = [
     title: 'Snapshot Cleanup for Test VMs',
     status: 'Ready',
     description: 'Remove stale snapshots from test virtual machines to recover storage and reduce performance overhead.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000028',
@@ -222,6 +276,8 @@ const mockChanges = [
     title: 'Certificate Trust Chain Update',
     status: 'Pending',
     description: 'Install the updated intermediate certificate chain on the web servers and test browser trust from internal devices.',
+    risk: 'High',
+    riskScore: 4,
   },
   {
     id: 'CHG1000029',
@@ -230,6 +286,8 @@ const mockChanges = [
     title: 'Web Proxy Rule Cleanup',
     status: 'Open',
     description: 'Retire unused web proxy allow-list entries and confirm the current approved business URLs still resolve correctly.',
+    risk: 'Low',
+    riskScore: 2,
   },
   {
     id: 'CHG1000030',
@@ -238,6 +296,8 @@ const mockChanges = [
     title: 'Batch Job Schedule Shift',
     status: 'Ready',
     description: 'Move the overnight reconciliation batch job to a later run time to avoid contention with the database maintenance task.',
+    risk: 'Medium',
+    riskScore: 3,
   },
 ]
 

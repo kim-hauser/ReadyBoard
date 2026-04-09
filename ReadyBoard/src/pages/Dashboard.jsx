@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import mockChanges from '../data/mockChanges'
 import ChangeCard from '../components/ChangeCard'
 import FilterSelect from '../components/FilterSelect'
+import RiskDot from '../components/RiskDot'
 
 const columns = [
   { key: 'ready', title: 'Ready' },
@@ -34,6 +35,10 @@ function Dashboard() {
     ...[...new Set(mockChanges.map(change => change.assignmentGroup || 'Unassigned'))].sort()
   ]
 
+  /* Risk filter state */
+
+  const [selectedRisk, setSelectedRisk] = useState('All Risk Scores')
+
   /* Creates new owner set from mockChanges.js. Also gets last name to sort.*/
   
   const getLastName = (fullName) => {
@@ -60,24 +65,54 @@ function Dashboard() {
     return acc
   }, {})
 
- const filteredAssignmentChanges =
-    selectedGroup === 'All Groups'
-      ? mockChanges
-      : mockChanges.filter(
-        change => (change.assignmentGroup || 'Unassigned') === selectedGroup
-      )
-    
-  const groupedByAssignment = filteredAssignmentChanges.reduce((acc, change) => {
-    const key = change.assignmentGroup || 'Unassigned'
-    acc[key] = acc[key] || []
-    acc[key].push(change)
-    return acc
-  }, {})
+  const filteredAssignmentChanges = mockChanges.filter((change) => {
+  const matchesGroup =
 
-  const sortedAssignmentGroups = Object.entries(groupedByAssignment).sort(
-    ([a], [b]) => a.localeCompare(b)
-  )
+    /* Created a const for sorted changes and tied it to assignment grouping.
+  
+    Additional sort logic:
 
+    5s (highest, red) first, then 4s (high, also red), 3(medium, yellow), 
+    then 2/1 (low/very low, green). Any group with a 5 goes to top.
+    */ 
+
+    selectedGroup === 'All Groups' ||
+    (change.assignmentGroup || 'Unassigned') === selectedGroup 
+
+  const matchesRisk =
+    selectedRisk === 'All Risk Scores' ||
+    (selectedRisk === 'Very High' && change.riskScore === 5) ||
+    (selectedRisk === 'High' && change.riskScore === 4) ||
+    (selectedRisk === 'Medium+' && change.riskScore >= 3) ||
+    (selectedRisk === 'Low' && change.riskScore === 2) ||
+    (selectedRisk === 'Very Low' && change.riskScore === 1)
+
+  return matchesGroup && matchesRisk
+})
+
+const groupedByAssignment = filteredAssignmentChanges.reduce((acc, change) => {
+  const key = change.assignmentGroup || 'Unassigned'
+  acc[key] = acc[key] || []
+  acc[key].push(change)
+  return acc
+}, {})
+
+const sortedAssignmentGroups = Object.entries(groupedByAssignment)
+  .map(([groupName, changes]) => [
+    groupName,
+    [...changes].sort((a, b) => b.riskScore - a.riskScore),
+  ])
+  .sort(([groupA, changesA], [groupB, changesB]) => {
+    const highestRiskA = Math.max(...changesA.map(change => change.riskScore || 0))
+    const highestRiskB = Math.max(...changesB.map(change => change.riskScore || 0))
+
+    if (highestRiskB !== highestRiskA) {
+      return highestRiskB - highestRiskA
+    }
+
+    return groupA.localeCompare(groupB)
+  })
+  
 return (
   <div className="page">
   <div className="dashboard-controls">
@@ -104,13 +139,30 @@ return (
   
   <div className="filter-bar">
     {viewMode === 'assignment' && (
-      <FilterSelect
-        label="Assignment Group"
-        id="groupFilter"
-        value={selectedGroup}
-        onChange={(e) => setSelectedGroup(e.target.value)}
-        options={assignmentGroups}
+  <>
+    <FilterSelect
+      label="Assignment Group"
+      id="groupFilter"
+      value={selectedGroup}
+      onChange={(e) => setSelectedGroup(e.target.value)}
+      options={assignmentGroups}
+    />
+
+    <FilterSelect
+      label="Risk Level"
+      id="riskFilter"
+      value={selectedRisk}
+      onChange={(e) => setSelectedRisk(e.target.value)}
+      options={[
+          'All Risk Scores',
+          'Very High',
+          'High',
+          'Medium+',
+          'Low',
+          'Very Low',
+        ]}
       />
+    </>
     )}
 
     {viewMode === 'status' && (
@@ -177,7 +229,10 @@ return (
                     className="queue-row"
                   >
                     <div className="queue-row-main">
-                      <span className="queue-change-id">{change.id}</span>
+                      <span className="queue-change-id-wrap">
+                          <span className="queue-change-id">{change.id}</span>
+                          <RiskDot riskScore={change.riskScore} />
+                      </span>
                       <span className="queue-change-title">{change.title}</span>
                     </div>
 

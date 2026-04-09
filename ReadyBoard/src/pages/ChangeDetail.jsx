@@ -42,6 +42,7 @@ function ChangeDetail() {
         <p><strong>Owner:</strong> {change.owner}</p>
         <p><strong>Assignment Group:</strong> {change.assignmentGroup}</p>
         <p><strong>Status:</strong> {change.status}</p>
+        <p><strong>Risk:</strong> {change.risk}</p>
         <p><strong>Description:</strong> {change.description}</p>
         <ButtonLink 
           to="/dashboard"
