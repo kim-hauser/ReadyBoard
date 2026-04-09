@@ -297,6 +297,28 @@ li + li {
   overflow: hidden;
 }
 
+/* Status view only */
+.status-column .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px;
+}
+
+.status-column .card h3 {
+  margin: 0 0 1rem;
+  line-height: 1.2;
+  min-height: 3.5rem;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.status-column .card p {
+  margin: auto 0 0;
+}
+
 .card::before {
   content: "";
   position: absolute;

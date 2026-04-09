@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import mockChanges from '../data/mockChanges'
 import ChangeCard from '../components/ChangeCard'
+import FilterSelect from '../components/FilterSelect'
 
 const columns = [
   { key: 'ready', title: 'Ready' },
@@ -100,46 +101,26 @@ return (
       Assignment Group View
     </button>
   </div>
-
+  
   <div className="filter-bar">
     {viewMode === 'assignment' && (
-      <div className="filter-group">
-        <label htmlFor="groupFilter" className="filter-label">
-          Assignment Group
-        </label>
-        <select
-          id="groupFilter"
-          value={selectedGroup}
-          onChange={(e) => setSelectedGroup(e.target.value)}
-          className="filter-dropdown"
-        >
-          {assignmentGroups.map((group) => (
-            <option key={group} value={group}>
-              {group}
-            </option>
-          ))}
-        </select>
-      </div>
+      <FilterSelect
+        label="Assignment Group"
+        id="groupFilter"
+        value={selectedGroup}
+        onChange={(e) => setSelectedGroup(e.target.value)}
+        options={assignmentGroups}
+      />
     )}
 
     {viewMode === 'status' && (
-      <div className="filter-group">
-        <label htmlFor="ownerFilter" className="filter-label">
-          Owner
-        </label>
-        <select
-          id="ownerFilter"
-          value={selectedOwner}
-          onChange={(e) => setSelectedOwner(e.target.value)}
-          className="filter-dropdown"
-        >
-          {owners.map((owner) => (
-            <option key={owner} value={owner}>
-              {owner}
-            </option>
-          ))}
-        </select>
-      </div>
+      <FilterSelect
+        label="Owner"
+        id="ownerFilter"
+        value={selectedOwner}
+        onChange={(e) => setSelectedOwner(e.target.value)}
+        options={owners}
+      />
     )}
   </div>
 </div>
