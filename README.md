@@ -98,8 +98,8 @@ This project started as a class assignment but evolved into something more meani
 
 Built by Kim Hauser:
 
-Launchcode Women+ Software Development Cohort Participant
-IT Product Administrator exploring front-end development and product design
+* Launchcode Women+ Software Development Cohort Participant
+* IT Product Administrator exploring front-end development and product design
 
 ---
 
