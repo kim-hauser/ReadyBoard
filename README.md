@@ -74,9 +74,7 @@ ReadyBoard was built with a focus on:
 
 * API integration for live data
 * Persistent filter state
-* Enhanced multi-select UI (chips/tags)
-* Tooltip details for risk indicators
-* Sorting improvements (e.g., automatic High → Low prioritization)
+* Enhanced multi-select UI
 
 ---
 
@@ -98,9 +96,10 @@ This project started as a class assignment but evolved into something more meani
 
 ## 👤 Author
 
-Built by Kim Hauser
-Launchcode Women+ Software Development Cohort Participant
-IT Product Administrator exploring front-end development and product design
+Built by Kim Hauser:
+
+* Launchcode Women+ Software Development Cohort Participant
+* IT Product Administrator exploring front-end development and product design
 
 ---
 
