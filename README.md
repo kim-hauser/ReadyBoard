@@ -1,4 +1,4 @@
-git reset --hard HEAD~1# ReadyBoard
+# ReadyBoard
 
 A lightweight change management dashboard designed to help teams quickly assess, prioritize, and organize work based on status, ownership, and risk.
 
