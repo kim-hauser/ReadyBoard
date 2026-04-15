@@ -13,10 +13,7 @@ function About() {
     // Handles invalid entries:
 
     if (!isFormValid) return
-
-    console.log("Form submitted:")
-    console.log({ name, email, message })
-
+    
     setName("")
     setEmail("")
     setMessage("")
